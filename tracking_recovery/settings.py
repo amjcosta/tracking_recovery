@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 """
 Django settings for tracking_recovery project.
 
@@ -10,12 +12,34 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
+from __future__ import unicode_literals
+from .conf.dev import *
 import os
-from settings_secret import *
+import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
+EXTERNAL_LIBS_PATH = os.path.join(BASE_DIR, "externals", "libs")
+EXTERNAL_APPS_PATH = os.path.join(BASE_DIR, "externals", "apps")
+sys.path = ["", EXTERNAL_LIBS_PATH, EXTERNAL_APPS_PATH] + sys.path
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "tracking_recovery", "media")
+STATIC_ROOT = os.path.join(BASE_DIR, "tracking_recovery", "static")
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "tracking_recovery", "site_static"),
+)
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, "tracking_recovery", "templates"),
+)
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, "locale"),
+)
+
+FILE_UPLOAD_TEMP_DIR = os.path.join(BASE_DIR, "tracking_recovery", "tmp")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -67,18 +91,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'tracking_recovery.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
 
@@ -116,3 +128,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+try:
+    execfile(os.path.join(
+        os.path.dirname(__file__), "local_settings.py"
+    ))
+except IOError:
+    pass

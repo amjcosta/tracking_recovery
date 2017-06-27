@@ -55,9 +55,10 @@ coverage.xml
 *.log
 local_settings.py
 
-# Flask stuff:
-instance/
-.webassets-cache
+# Project files and directories:
+/tracking_recovery/static/
+/tracking_recovery/tmp/
+/tracking_recovery/media/
 
 # Scrapy stuff:
 .scrapy
@@ -67,9 +68,6 @@ docs/_build/
 
 # PyBuilder
 target/
-
-# Jupyter Notebook
-.ipynb_checkpoints
 
 # pyenv
 .python-version
@@ -99,6 +97,3 @@ ENV/
 
 # mypy
 .mypy_cache/
-
-# Secrets
-settings_secret.py
