@@ -53,6 +53,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'food_list.apps.FoodListConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -115,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'EST'
 
 USE_I18N = True
 
@@ -130,8 +131,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 try:
-    execfile(os.path.join(
+    exec(open(os.path.join(
         os.path.dirname(__file__), "local_settings.py"
-    ))
+    )).read())
+    # execfile(os.path.join(
+    #     os.path.dirname(__file__), "local_settings.py"
+    # ))
 except IOError:
     pass
