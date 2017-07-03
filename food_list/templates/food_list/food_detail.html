@@ -1,0 +1,10 @@
+{% if food %}
+    <p>Information for {{ food.food_text }}:</p>
+    <ul>
+        <li>Serving size: {{ food.serving_size }}</li>
+        <li>Number of calories (energy) per serving: {{ calorie_amount }}</li>
+        <li>Servings per container: {{ number_of_servings }}</li>
+    </ul>
+{% else %}
+    <p>No information listed for this food.</p>
+{% endif %}

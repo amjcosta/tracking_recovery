@@ -11,5 +11,5 @@ urlpatterns = [
     # ex: /food_list/food
     url(r'^food/$', views.food_index, name='food_index'),
     # ex: /food_list/food/3
-    url(r'^food/(?P<food_id>[0-9]+)/$', views.food, name='food_detail')
+    url(r'^food/(?P<food_id>[0-9]+)/$', views.food, name='food_detail'),
 ]

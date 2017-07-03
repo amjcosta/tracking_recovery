@@ -5,7 +5,10 @@ from django.template import loader
 from .models import DailyFoodList, Food
 
 def index(request):
-    recent_days_list = DailyFoodList.objects.order_by('-entry_date')[:7]
+    try:
+        recent_days_list = DailyFoodList.objects.order_by('-entry_date')[:7]
+    except DailyFoodList.DoesNotExist:
+        raise Http404("Cannot find daily meal plans.")
     template = loader.get_template("food_list/index.html")
     context = {
         'recent_days_list': recent_days_list,
@@ -21,7 +24,10 @@ def daily_list(request, dailyfoodlist_id):
     return HttpResponse(response % dailyfoodlist_id)
 
 def food_index(request):
-    list_of_foods = Food.objects.order_by('food_text')
+    try:
+        list_of_foods = Food.objects.order_by('food_text')
+    except Food.DoesNotExist:
+        raise Http404("Cannot find list of foods.")
     template = loader.get_template("food_list/food_index.html")
     context = {
         'list_of_foods': list_of_foods,
@@ -33,5 +39,9 @@ def food(request, food_id):
         food = Food.objects.get(pk=food_id)
     except Food.DoesNotExist:
         raise Http404("Food is not in our system yet.")
-    response = "Information about food %s:"
-    return HttpResponse(response % food_id)
+    template = loader.get_template("food_list/food_detail.html")
+    context = {
+        'food': food,
+    }
+    return HttpResponse(template.render(context, request))
+    
