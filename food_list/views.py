@@ -16,6 +16,7 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def daily_list(request, dailyfoodlist_id):
+    # TODO: this should list meals and the foods eaten at each meal.
     try:
         daily_food_list = DailyFoodList.objects.get(pk=dailyfoodlist_id)
     except DailyFoodList.DoesNotExist:

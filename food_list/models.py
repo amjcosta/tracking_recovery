@@ -9,6 +9,8 @@ class Food(models.Model):
         return self.food_text
 
 class DailyFoodList(models.Model):
+    # TODO: This needs to accommodate a list of foods that are associated with a date.
+    # Ideally, associated with a certain meal on a certain date.
     entry_date = models.DateTimeField('date of food')
     food_text = models.ForeignKey(Food, on_delete=models.CASCADE)
     def __str__(self):
