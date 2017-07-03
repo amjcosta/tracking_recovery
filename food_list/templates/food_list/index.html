@@ -1,7 +1,7 @@
 {% if recent_days_list %}
     <ul>
     {% for iday in recent_days_list %}
-        <li><a href="/food_list/{{ iday.id }}/">{{ iday.entry_date }}</a></li>
+        <li><a href="{% url 'food_list:daily_list' iday.id %}">{{ iday.entry_date }}</a></li>
     {% endfor %}
     </ul>
 {% else %}

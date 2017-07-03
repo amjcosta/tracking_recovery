@@ -1,8 +1,8 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.template import loader
 
-from .models import DailyFoodList
+from .models import DailyFoodList, Food
 
 def index(request):
     recent_days_list = DailyFoodList.objects.order_by('-entry_date')[:7]
@@ -13,5 +13,25 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 def daily_list(request, dailyfoodlist_id):
+    try:
+        daily_food_list = DailyFoodList.objects.get(pk=dailyfoodlist_id)
+    except DailyFoodList.DoesNotExist:
+        raise Http404("Food list does not exist for this day.")
     response = "Meal plan for %s:"
     return HttpResponse(response % dailyfoodlist_id)
+
+def food_index(request):
+    list_of_foods = Food.objects.order_by('food_text')
+    template = loader.get_template("food_list/food_index.html")
+    context = {
+        'list_of_foods': list_of_foods,
+    }
+    return HttpResponse(template.render(context, request))
+
+def food(request, food_id):
+    try:
+        food = Food.objects.get(pk=food_id)
+    except Food.DoesNotExist:
+        raise Http404("Food is not in our system yet.")
+    response = "Information about food %s:"
+    return HttpResponse(response % food_id)
