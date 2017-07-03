@@ -21,8 +21,16 @@ def daily_list(request, dailyfoodlist_id):
         daily_food_list = DailyFoodList.objects.get(pk=dailyfoodlist_id)
     except DailyFoodList.DoesNotExist:
         raise Http404("Food list does not exist for this day.")
-    response = "Meal plan for %s:"
-    return HttpResponse(response % dailyfoodlist_id)
+    foods_to_eat = daily_food_list.food_text.all()
+    total_cals = 0
+    for item in foods_to_eat:
+        total_cals += item.calorie_amount * item.number_of_servings
+    template = loader.get_template("food_list/daily_list.html")
+    context = {
+        'foods_to_eat': foods_to_eat,
+        'total_cals': total_cals,
+    }
+    return HttpResponse(template.render(context, request))
 
 def food_index(request):
     try:

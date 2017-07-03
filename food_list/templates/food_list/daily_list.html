@@ -1,0 +1,14 @@
+{% if foods_to_eat %}
+    <ul>
+    {% for item in foods_to_eat %}
+        <li>
+            <a href="{% url 'food_list:food_detail' item.id %}">{{ item.food_text }}</a>,
+            Serving size: {{ item.serving_size }},
+            Number of servings: {{ item.number_of_servings }}
+        </li>
+    {% endfor %}
+    </ul>
+    <p>Total calories today: {{ total_cals }}</p>
+{% else %}
+    <p>No foods added yet.</p>
+{% endif %}
