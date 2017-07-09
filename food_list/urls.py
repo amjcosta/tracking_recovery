@@ -10,6 +10,6 @@ urlpatterns = [
     url(r'^(?P<dailyfoodlist_id>[0-9]+)/$', views.daily_list, name='daily_list'),
     # ex: /food_list/food
     url(r'^food/$', views.food_index, name='food_index'),
-    # ex: /food_list/food/3
+    # ex: /food_list/food/5
     url(r'^food/(?P<food_id>[0-9]+)/$', views.food, name='food_detail'),
 ]

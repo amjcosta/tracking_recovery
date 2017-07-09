@@ -22,6 +22,7 @@ def daily_list(request, dailyfoodlist_id):
     except DailyFoodList.DoesNotExist:
         raise Http404("Food list does not exist for this day.")
     foods_to_eat = daily_food_list.food_text.all()
+    entry_date = daily_food_list.entry_date
     total_cals = 0
     for item in foods_to_eat:
         total_cals += item.calorie_amount * item.number_of_servings
@@ -29,6 +30,7 @@ def daily_list(request, dailyfoodlist_id):
     context = {
         'foods_to_eat': foods_to_eat,
         'total_cals': total_cals,
+        'entry_date': entry_date
     }
     return HttpResponse(template.render(context, request))
 
