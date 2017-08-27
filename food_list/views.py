@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.template import loader
 
 from .models import DailyFoodList, Food
+from .forms import AddFoodToDayForm
 
 def index(request):
     try:
@@ -55,4 +56,17 @@ def food(request, food_id):
         'food': food,
     }
     return HttpResponse(template.render(context, request))
+
+def add_food(request):
+    form = AddFoodToDayForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            # food_to_add = 
+            day_to_add = form.cleaned_data['day_to_add']
+            no_servings = form.cleaned_data['no_servings']
+            request.session['add_food'] = request.POST['add_food']
+            return HttpResponseRedirect('/Food added!/')
+        else:
+            form = AddFoodToDayForm()
+        return render(request, 'food_detail.html', {'form': form})
     
